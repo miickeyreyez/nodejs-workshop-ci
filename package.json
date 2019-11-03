@@ -1,0 +1,49 @@
+{
+  "name": "nodejs-workshop",
+  "version": "1.0.0",
+  "description": "Worksjop - NodeJS app with Express",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel index.js -d lib",
+    "start": "babel-watch ./index.js",
+    "lint": "eslint . --ext .js --cache",
+    "test": "jest --config jest.config.js --coverage",
+    "test:integration": "jest --config jest.integration.config.js --coverage --forceExit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miickeyreyez/nodejs-workshop.git"
+  },
+  "keywords": [
+    "nodejs",
+    "workshop",
+    "express"
+  ],
+  "author": "Angel Martinez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miickeyreyez/nodejs-workshop/issues"
+  },
+  "homepage": "https://github.com/miickeyreyez/nodejs-workshop#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.6",
+    "mongoose-pagination": "^1.0.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.4.5",
+    "babel-watch": "^7.0.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  }
+}

@@ -1,0 +1,57 @@
+docker_image: &docker_image
+  working_directory: ~/nodejs-workshop
+  docker:
+  - image: circleci/node:10.8.0
+
+restore_cache:
+- &restore_cache
+  restore_cache:
+    keys:
+    - v1-dependencies-{{ checksum "package.json" }}
+    # fallback to using the latest cache if no exact match is found
+    - v1-dependencies-
+
+version: 2
+jobs:
+  install_dependencies:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - run: npm install install
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+  run_linter:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - run: npm run lint
+  run_unit_tests:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - run: npm run test
+  run_integration_tests:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - run: npm run test:integration
+workflows:
+  version: 2
+  continuos_integration:
+    jobs:
+    - install_dependencies
+    - run_linter:
+        requires:
+        - install_dependencies
+    - run_unit_tests:
+        requires:
+        - run_linter
+    - run_integration_tests:
+        requires:
+        - run_linter
