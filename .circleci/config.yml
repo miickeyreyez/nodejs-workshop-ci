@@ -46,7 +46,6 @@ jobs:
     steps:
     - checkout
     - *restore_cache
-    - run: ls -la
     - sonarcloud/scan
 
 orbs:
@@ -60,6 +59,7 @@ workflows:
     - run_linter:
         requires:
         - install_dependencies
+        context: SonarCloud
     - run_sonar_cloud:
         requires:
         - install_dependencies
