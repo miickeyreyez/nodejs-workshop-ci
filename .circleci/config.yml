@@ -11,7 +11,7 @@ restore_cache:
     # fallback to using the latest cache if no exact match is found
     - v1-dependencies-
 
-version: 2
+version: 2.1
 jobs:
   install_dependencies:
     <<: *docker_image
@@ -40,13 +40,26 @@ jobs:
     steps:
     - checkout
     - *restore_cache
-    - run: npm run test:integration
+    - run: ls -la
+  run_sonar_cloud:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - sonarcloud/scan
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+
 workflows:
-  version: 2
   continuos_integration:
     jobs:
     - install_dependencies
     - run_linter:
+        requires:
+        - install_dependencies
+        context: SonarCloud
+    - run_sonar_cloud:
         requires:
         - install_dependencies
     - run_unit_tests:
