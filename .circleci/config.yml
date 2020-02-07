@@ -48,6 +48,7 @@ jobs:
     - *restore_cache
     - run: ls -la
     - sonarcloud/scan
+
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 
