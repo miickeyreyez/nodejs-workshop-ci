@@ -51,8 +51,8 @@ jobs:
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 
+version: 2.1
 workflows:
-  version: 2.1
   continuos_integration:
     jobs:
     - install_dependencies
