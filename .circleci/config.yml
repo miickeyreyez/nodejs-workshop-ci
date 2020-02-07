@@ -40,13 +40,26 @@ jobs:
     steps:
     - checkout
     - *restore_cache
-    - run: npm run test:integration
+    - run: ls -la
+  run_sonar_cloud:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - run: ls -la
+    - sonarcloud/scan
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+
 workflows:
   version: 2
   continuos_integration:
     jobs:
     - install_dependencies
     - run_linter:
+        requires:
+        - install_dependencies
+    - run_sonar_cloud:
         requires:
         - install_dependencies
     - run_unit_tests:
